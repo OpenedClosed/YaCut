@@ -1,7 +1,9 @@
 """
 Файл, описывающий функции представления проекта.
 """
-from flask import abort, redirect, render_template
+from http import HTTPStatus
+
+from flask import redirect, render_template
 
 from . import app
 from .forms import LinksForm
@@ -26,8 +28,6 @@ def index_view():
 
 @app.route('/<string:short>')
 def redirector(short):
-    url_map = URLMap.query.filter_by(short=short).first()
-    if not url_map:
-        abort(404)
+    url_map = URLMap.query.filter_by(short=short).first_or_404()
     source_address = url_map.original
-    return redirect(source_address, 302)
+    return redirect(source_address, HTTPStatus.FOUND)

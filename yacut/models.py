@@ -41,7 +41,3 @@ class URLMap(db.Model):
         for key in name_relation:
             if key in data:
                 setattr(self, name_relation[key], data[key])
-
-        for key in name_relation:
-            if key in data:
-                setattr(self, name_relation[key], data[key])
